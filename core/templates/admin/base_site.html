@@ -1,0 +1,411 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | Nexo CRM Admin{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/admin.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6496e6;
+            --secondary-color: #3c64b4;
+            --accent-color: #7eb0ff;
+            --light-bg: #f8f9fa;
+            --dark-text: #2c3e50;
+            --light-text: #ecf0f1;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+        }
+
+        /* ================== RESET ================== */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', sans-serif !important;
+            background: #f5f7fa !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            line-height: 1.6;
+            min-height: 100vh;
+            color: var(--dark-text) !important; /* COLOR DEL TEXTO GENERAL */
+        }
+
+        /* ================== HEADER FIXED COMPACTO ================== */
+        #header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+            color: white !important;
+            padding: 0 !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+            border-bottom: none !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            z-index: 1000;
+            height: auto !important;
+        }
+
+        /* ================== CONTENEDOR PRINCIPAL - ESPACIADO MÍNIMO ================== */
+        #container {
+            background: #f5f7fa !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            min-height: 100vh !important;
+            display: block !important;
+            margin-top: 80px !important; /* ESPACIADO REDUCIDO */
+        }
+
+        /* ================== CONTENT PRINCIPAL COMPACTO ================== */
+        #content {
+            padding: 20px !important; /* PADDING REDUCIDO */
+            max-width: 1200px !important; /* ANCHO MÁXIMO REDUCIDO */
+            margin: 0 auto !important;
+            background: transparent !important;
+            width: 100% !important;
+        }
+
+        /* ================== BRANDING COMPACTO ================== */
+        .admin-branding {
+            padding: 10px 25px !important; /* MÁS COMPACTO */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+            background: transparent !important;
+        }
+
+        #site-name {
+            margin: 0 !important;
+            font-size: 22px !important; /* TEXTO MÁS PEQUEÑO */
+            font-weight: 700 !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+
+        #site-name a {
+            color: white !important;
+            text-decoration: none !important;
+            transition: opacity 0.3s !important;
+            font-family: 'Poppins', sans-serif !important;
+        }
+
+        #site-name i {
+            font-size: 24px !important;
+            opacity: 0.95 !important;
+            color: var(--accent-color) !important;
+        }
+
+        .admin-subtitle {
+            font-size: 12px !important; /* MÁS PEQUEÑO */
+            font-weight: 400 !important;
+            opacity: 1 !important;
+            margin-left: 10px !important;
+            font-style: italic !important;
+            color: white !important;
+        }
+
+        /* ================== USER TOOLS COMPACTO ================== */
+        #user-tools {
+            padding: 8px 25px !important; /* MÁS COMPACTO */
+            background: rgba(255, 255, 255, 0.08) !important;
+            font-size: 13px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 12px !important;
+            flex-wrap: wrap !important;
+        }
+
+        .user-welcome {
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            font-weight: 500 !important;
+            color: white !important;
+        }
+
+        .user-name {
+            background: rgba(255, 255, 255, 0.15) !important;
+            padding: 4px 10px !important;
+            border-radius: 12px !important;
+            font-weight: 500 !important;
+            font-size: 12px !important;
+        }
+
+        #user-tools a {
+            color: white !important;
+            text-decoration: none !important;
+            padding: 4px 10px !important;
+            border-radius: 5px !important;
+            transition: all 0.3s !important;
+            font-weight: 500 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 5px !important;
+            font-size: 12px !important;
+            background: transparent !important;
+        }
+
+        /* ================== DASHBOARD - MÓDULOS MÁS ESTRECHA ================== */
+        .dashboard {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important; /* MÓDULOS MÁS ESTRECHOS */
+            gap: 20px !important; /* ESPACIO REDUCIDO */
+            margin-bottom: 25px !important;
+            width: 100% !important;
+        }
+
+        .module {
+            background: white !important;
+            border-radius: 10px !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08) !important;
+            border: none !important;
+            overflow: hidden !important;
+            transition: all 0.3s ease !important;
+            width: 100% !important;
+        }
+
+        .module:hover {
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12) !important;
+        }
+
+        .module h2 {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+            color: white !important;
+            margin: 0 !important;
+            padding: 15px 18px !important; /* MÁS COMPACTO */
+            font-size: 16px !important; /* TEXTO MÁS PEQUEÑO */
+            font-weight: 600 !important;
+            border-bottom: none !important;
+            font-family: 'Poppins', sans-serif !important;
+        }
+
+        .module table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            margin: 0 !important;
+        }
+
+        .module th, .module td {
+            padding: 12px 18px !important; /* MÁS COMPACTO */
+            text-align: left !important;
+            border-bottom: 1px solid #f1f5f9 !important;
+            font-family: 'Poppins', sans-serif !important;
+        }
+
+        .module th {
+            background: #f8fafc !important;
+            font-weight: 600 !important;
+            color: var(--dark-text) !important;
+            font-size: 13px !important; /* MÁS PEQUEÑO */
+        }
+
+        .module td {
+            color: #64748b !important;
+            font-size: 14px !important; /* MÁS PEQUEÑO */
+        }
+
+        .module tr:last-child td {
+            border-bottom: none !important;
+        }
+
+        .module tr:hover td {
+            background: #f8fafc !important;
+        }
+
+        /* ================== BOTONES MÁS COMPACTOS ================== */
+        .addlink, .changelink {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            padding: 8px 14px !important; /* MÁS COMPACTOS */
+            border-radius: 6px !important;
+            text-decoration: none !important;
+            font-weight: 500 !important;
+            font-size: 12px !important; /* MÁS PEQUEÑOS */
+            transition: all 0.3s ease !important;
+            font-family: 'Poppins', sans-serif !important;
+        }
+
+        .addlink {
+            background: linear-gradient(135deg, var(--success-color) 0%, #059669 100%) !important;
+            color: white !important;
+        }
+
+        .addlink:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 3px 8px rgba(16, 185, 129, 0.3) !important;
+        }
+
+        .changelink {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+            color: white !important;
+        }
+
+        .changelink:hover {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #1d4ed8 100%) !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 3px 8px rgba(100, 150, 230, 0.3) !important;
+        }
+
+        /* ================== ACCIONES RECIENTES COMPACTA ================== */
+        #recent-actions-module {
+            background: white !important;
+            border-radius: 10px !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08) !important;
+            overflow: hidden !important;
+            margin-top: 25px !important;
+            border: none !important;
+            width: 100% !important;
+        }
+
+        #recent-actions-module h2 {
+            background: linear-gradient(135deg, var(--warning-color) 0%, #d97706 100%) !important;
+            color: white !important;
+            margin: 0 !important;
+            padding: 15px 18px !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            font-family: 'Poppins', sans-serif !important;
+            border: none !important;
+        }
+
+        /* ================== TEXTOS VISIBLES - COLOR OSCURO ================== */
+        
+        /* Todos los textos del body en color oscuro */
+        body, body * {
+            color: var(--dark-text) !important;
+        }
+
+        /* Excepciones para textos que deben ser blancos (en headers) */
+        #header *, .module h2, #recent-actions-module h2 {
+            color: white !important;
+        }
+
+        /* Textos específicos del contenido */
+        #content, #content-main, .dashboard, .module, .breadcrumbs {
+            color: var(--dark-text) !important;
+        }
+
+        /* Asegurar que todos los textos sean visibles */
+        .module th, .module td, .module caption {
+            color: var(--dark-text) !important;
+        }
+
+        /* ================== BREADCRUMBS COMPACTO ================== */
+        .breadcrumbs {
+            background: rgba(100, 150, 230, 0.1) !important;
+            border-radius: 6px !important;
+            padding: 10px 15px !important;
+            margin-bottom: 20px !important;
+            border: 1px solid rgba(100, 150, 230, 0.2) !important;
+            font-family: 'Poppins', sans-serif !important;
+            font-size: 13px !important;
+        }
+
+        /* ================== RESPONSIVE MÁS AJUSTADO ================== */
+        @media (max-width: 1024px) {
+            #container {
+                margin-top: 75px !important;
+            }
+            
+            #content {
+                padding: 15px !important;
+                max-width: 100% !important;
+            }
+            
+            .dashboard {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #container {
+                margin-top: 70px !important;
+            }
+            
+            #content {
+                padding: 12px !important;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+            
+            .admin-branding {
+                padding: 8px 15px !important;
+            }
+            
+            #site-name {
+                font-size: 20px !important;
+                gap: 8px !important;
+            }
+            
+            .admin-subtitle {
+                font-size: 11px !important;
+                margin-left: 8px !important;
+            }
+            
+            #user-tools {
+                padding: 6px 15px !important;
+                gap: 8px !important;
+            }
+            
+            .module th, .module td {
+                padding: 10px 12px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #container {
+                margin-top: 65px !important;
+            }
+            
+            #content {
+                padding: 10px !important;
+            }
+            
+            .module th, .module td {
+                padding: 8px 10px !important;
+                font-size: 12px !important;
+            }
+        }
+
+        /* ================== GARANTIZAR VISIBILIDAD ================== */
+        #content-main, .dashboard, .module, #recent-actions-module {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+    </style>
+{% endblock %}
+
+{% block branding %}
+<div class="admin-branding">
+    <h1 id="site-name">
+        <i class="fas fa-cogs"></i>
+        <a href="{% url 'admin:index' %}">Nexo CRM</a>
+        <span class="admin-subtitle">Sitio administrativo</span>
+    </h1>
+</div>
+{% endblock %}
+
+{% block welcome-msg %}
+    <div class="user-welcome">
+        <i class="fas fa-user-circle"></i>
+        <span class="user-name">Hola, {{ request.user.get_full_name|default:request.user.username }}</span>
+    </div>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

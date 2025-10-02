@@ -1,6 +1,14 @@
 :root {
-    --colorPrincipal: #970747;
-    --colorSecundario: #fef6ec;
+    --colorPrincipal: #0e5492;
+    --colorSecundario: #f8f9fa;
+    --primary-color: #6496e6;
+    --secondary-color: #3c64b4;
+    --accent-color: #7eb0ff;
+    --light-bg: #f8f9fa;
+    --dark-text: #2c3e50;
+    --light-text: #ecf0f1;
+    --sidebar-width: 280px;
+    --header-height: 70px;
 }
 
 @font-face {
@@ -15,7 +23,6 @@
     src: url('../fonts/Roboto/static/Roboto-Bold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
-    /* corregido de 'bold' a 'normal' */
 }
 
 /* Reset general */
@@ -26,7 +33,10 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    display: flex;
+    min-height: 100vh;
 }
 
 /* ================== Elementos base ================== */
@@ -49,21 +59,25 @@ h1 {
     position: fixed;
     top: 0;
     left: 0;
-    display: grid;
+    display: flex;
+    justify-content: flex-end;
     align-items: center;
-    justify-content: right;
+    padding: 0 15px;
+    gap: 15px;
+    z-index: 1000;
 }
 
 #searchbar {
-    position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
+    left: auto;
+    transform: none;
+    flex: 0 1 400px;
+    max-width: 400px;
+    min-width: 200px;
 }
 
 .custom-form {
     --timing: 0.3s;
-    --width-of-input: 500px;
     --height-of-input: 40px;
     --border-height: 2px;
     --input-bg: #ffffff;
@@ -72,7 +86,7 @@ h1 {
     --after-border-radius: 1px;
 
     position: relative;
-    width: var(--width-of-input);
+    width: 100%;
     height: var(--height-of-input);
     display: flex;
     align-items: center;
@@ -147,24 +161,22 @@ h1 {
 }
 
 #superior img {
-    height: 50px;
+    height: 40px;
     border-radius: 50%;
 }
 
 #superior button {
-    height: 50px;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 10px;
+    height: 40px;
+    display: flex;
     align-items: center;
-    text-align: left;
+    gap: 10px;
     color: var(--colorSecundario);
-    margin-right: 10px;
+    background: none;
     border: none;
     border-radius: 999px;
-    padding-top: 0%;
-    padding-left: 0%;
-    padding-right: 10px;
+    padding: 0 12px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 #superior button:hover {
@@ -172,152 +184,512 @@ h1 {
     color: var(--colorPrincipal);
 }
 
-/* ================== Barra lateral (sidebar) ================== */
+/* ================== SideBar Rediseñada ================== */
 nav {
-    width: 250px;
-    height: calc(100dvh - 60px);
-    background-color: var(--colorSecundario);
+    width: var(--sidebar-width);
+    background: linear-gradient(120deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
     position: fixed;
-    top: 60px;
-    left: 0;
-    border-right: 5px solid var(--colorPrincipal);
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
+    top: 0;
 }
 
-nav img {
-    width: 100%;
+.logo-container {
+    background: linear-gradient(120deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    padding: 30px 20px;
+    border-radius: 0 0 12px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin: 0 0 30px 0;
 }
 
-nav .primero {
-    border-top: 5px solid var(--colorPrincipal);
+.logo-container img {
+    max-height: 150px;
+    width: auto;
+    max-width: 100%;
 }
 
 nav ul {
+    list-style: none;
     padding: 0;
     margin: 0;
 }
 
-nav li {
-    list-style-type: none;
+nav ul li {
+    margin-bottom: 5px;
 }
 
-nav a {
-    border-bottom: 5px solid var(--colorPrincipal);
-    height: 50px;
-    display: grid;
+nav ul li a {
+    color: var(--light-text);
+    text-decoration: none;
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s;
+    border-left: 4px solid transparent;
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    border-bottom: none;
+    height: auto;
+    display: flex;
     place-items: center;
-    color: var(--colorPrincipal);
-    font-size: 30px;
 }
 
-nav a:hover,
-.activo {
-    background-color: var(--colorPrincipal);
-    color: var(--colorSecundario);
+nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid var(--accent-color);
+}
+
+nav ul li a.activo {
+    background: rgba(255, 255, 255, 0.15);
+    border-left: 4px solid var(--accent-color);
+    font-weight: 600;
+}
+
+nav ul li a i {
+    margin-right: 12px;
+    font-size: 22px;
 }
 
 .crear {
-    border: 5px solid var(--colorPrincipal);
-    border-radius: 10px;
-    margin: 60px 10%;
-    width: 80%;
-    height: 100px;
-    font-size: 25px;
-    display: block;
-    padding: 25px 9px;
+    background: linear-gradient(120deg, #2ecc71, #27ae60);
+    color: white;
+    text-decoration: none;
+    padding: 18px 25px;
+    margin: 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    height: auto;
+    width: auto;
+    font-size: 18px;
+    padding: 18px 25px;
 }
 
-/* ================== Contenido principal ================== */
+.crear:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    color: white;
+    background: linear-gradient(120deg, #27ae60, #2ecc71);
+}
+
+.crear i {
+    margin-right: 10px;
+    font-size: 22px;
+}
+
+/* ================== Contenido Principal ================== */
 #principal {
-    min-height: calc(100dvh - 60px);
-    display: grid;
-    grid-template-rows: 1fr auto;
-    margin-left: 250px;
-    margin-top: 60px;
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 #contenedor {
+    flex: 1;
     padding: 30px;
+    background-color: var(--light-bg);
 }
 
-td img {
-    height: 40px;
+/* ================== Estilos específicos para el contenido de pólizas ================== */
+.page-title {
+    color: var(--dark-text);
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-family: 'Poppins', sans-serif;
 }
 
-#contenedorDatos {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+.page-subtitle {
+    color: #5a6c7d;
+    font-size: 20px;
+    margin-bottom: 30px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
 }
 
-#enlaces {
-    display: grid;
-    grid-template-rows: repeat(3, 1fr);
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border: none;
+    margin-bottom: 25px;
 }
 
-#contenedor .reportes {
-    color: var(--colorSecundario);
-    display: grid;
-    place-items: center;
-    height: 80px;
-    width: 500px;
-    border-radius: 10px;
-    font-size: 25px;
-    text-decoration: none;
-    background-color: var(--colorPrincipal);
-    margin: 10px 0
+.card-header {
+    background: linear-gradient(120deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 18px 20px;
+    font-size: 20px;
+    font-weight: 600;
+    border: none;
+    font-family: 'Poppins', sans-serif;
 }
 
-#contenedor .reportes:hover {
-    background-color: var(--colorSecundario);
-    color: var(--colorPrincipal);
-    border: 3px solid var(--colorPrincipal);
+.card-body {
+    padding: 25px;
 }
 
-/* ================== Botones ================== */
-.btn {
-    color: var(--colorSecundario);
-    background-color: var(--colorPrincipal);
+.table {
+    font-size: 17px;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 0 !important; /* Margen superior eliminado */
 }
 
-.btn:hover {
-    color: var(--colorPrincipal);
-    background-color: var(--colorSecundario);
-    border: 1px solid var(--colorPrincipal);
+.table thead th {
+    background-color: #e9ecef;
+    color: var(--dark-text);
+    font-weight: 600;
+    padding: 16px 12px;
+    border-bottom: 2px solid #dee2e6;
+    vertical-align: middle;
 }
 
-/* ================== Footer ================== */
+.table tbody td {
+    padding: 14px 12px;
+    vertical-align: middle;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(100, 150, 230, 0.05);
+}
+
+.btn-sm {
+    padding: 8px 14px;
+    font-size: 15px;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+}
+
+.btn-info {
+    background: linear-gradient(120deg, #17a2b8, #138496);
+    border: none;
+}
+
+.btn-warning {
+    background: linear-gradient(120deg, #ffc107, #e0a800);
+    border: none;
+}
+
+.btn-info:hover, .btn-warning:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ================== Footer Rediseñado ================== */
 footer {
-    background-color: var(--colorPrincipal);
-    min-height: 230px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    padding: 40px 20px 0 20px;
-}
-
-footer div {
-    text-align: center;
-}
-
-footer #segundo {
-    padding: 0 50px;
+    background: linear-gradient(120deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 30px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
 }
 
 footer h1 {
-    color: var(--colorSecundario);
-    font-size: 100px;
-    margin: 0;
+    font-size: 26px;
+    margin-bottom: 5px;
+    font-weight: 700;
+    color: white;
 }
 
 footer #subtitulo {
-    font-size: 27px;
+    font-style: italic;
+    opacity: 0.9;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+footer #segundo {
+    text-align: right;
+    max-width: 400px;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 footer p,
 footer a {
     font-weight: normal;
-    color: var(--colorSecundario);
+    color: var(--light-text);
     margin: 0;
 }
 
-footer a {
-    font-size: 25px;
+/* ================== Responsive ================== */
+@media (max-width: 1200px) {
+    #searchbar {
+        max-width: 400px;
+        min-width: 250px;
+    }
+}
+
+@media (max-width: 992px) {
+    nav {
+        width: 80px;
+        align-items: center;
+        padding: 0;
+    }
+    
+    .logo-container {
+        padding: 20px 15px;
+        margin: 0 0 20px 0;
+    }
+    
+    .logo-container img {
+        max-height: 100px;
+    }
+    
+    nav ul li a {
+        padding: 15px;
+        justify-content: center;
+        border-left: none;
+        border-bottom: 4px solid transparent;
+        font-size: 0;
+    }
+    
+    nav ul li a:hover,
+    nav ul li a.activo {
+        border-left: none;
+        border-bottom: 4px solid var(--accent-color);
+    }
+    
+    nav ul li a span {
+        display: none;
+    }
+    
+    nav ul li a i {
+        margin-right: 0;
+        font-size: 24px;
+    }
+    
+    .crear {
+        padding: 15px;
+        margin: 10px;
+        font-size: 0;
+    }
+    
+    .crear span {
+        display: none;
+    }
+    
+    .crear i {
+        margin-right: 0;
+        font-size: 24px;
+    }
+    
+    #principal {
+        margin-left: 80px;
+    }
+    
+    #superior {
+        justify-content: flex-end;
+        gap: 15px;
+        padding: 15px;
+        left: 80px;
+        width: calc(100% - 80px);
+    }
+    
+    #searchbar {
+        max-width: 300px;
+        min-width: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    #superior {
+        padding: 12px 20px;
+        gap: 15px;
+    }
+    
+    .btn-primary {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    
+    .btn-primary img {
+        width: 32px;
+        height: 32px;
+    }
+    
+    #contenedor {
+        padding: 20px;
+    }
+    
+    .card-header {
+        font-size: 18px;
+    }
+    
+    #searchbar {
+        max-width: 250px;
+        min-width: 180px;
+    }
+    
+    .custom-form__input {
+        font-size: 16px;
+        padding: 12px 40px 12px 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    #superior {
+        padding: 10px 15px !important;
+        gap: 12px !important;
+        height: auto !important;
+        min-height: 60px !important;
+        left: 80px !important;
+        width: calc(100vw - 80px) !important;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    #searchbar {
+        max-width: 140px !important;
+        min-width: 120px !important;
+        margin-right: 8px !important;
+        order: 1;
+        flex: 0 0 auto;
+    }
+    
+    .custom-form__input {
+        font-size: 14px;
+        padding: 10px 35px 10px 12px;
+    }
+    
+    .btn-primary {
+        padding: 6px 12px !important;
+        font-size: 12px !important;
+        min-width: auto !important;
+        order: 2;
+    }
+    
+    .btn-primary img {
+        width: 28px !important;
+        height: 28px !important;
+    }
+    
+    .btn-primary span {
+        display: none;
+    }
+    
+    .page-title {
+        font-size: 24px;
+    }
+    
+    .page-subtitle {
+        font-size: 16px;
+    }
+    
+    .table thead {
+        display: none;
+    }
+    
+    .table, .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+    }
+    
+    .table tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 12px;
+        width: 45%;
+        padding-right: 15px;
+        text-align: left;
+        font-weight: bold;
+    }
+    
+    footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    footer #segundo {
+        text-align: center;
+    }
+}
+
+/* ================== Modal ================== */
+.modal-content {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    font-family: 'Poppins', sans-serif;
+}
+
+.modal-header {
+    background: linear-gradient(120deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 20px;
+}
+
+.modal-title {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.modal-body {
+    padding: 25px;
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.modal-footer {
+    padding: 20px;
+}
+
+/* ================== Corrección específica para la tabla ================== */
+.card-body .table-responsive .table {
+    margin-top: 0 !important;
+}
+
+.card-body .table {
+    margin-top: 0 !important;
+}
+/* Eliminar el margen superior del primer elemento en el contenido principal */
+#contenedor > *:first-child {
+    margin-top: 0 !important;
+}
+
+/* Aseguradoras - Solución definitiva para el tamaño de las imágenes */
+.table td img {
+    height: 40px !important;
+    width: auto !important;
 }

@@ -1,110 +1,855 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}Nexo CRM{% endblock %}</title>
     {% load static %}
     <!-- Bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts - Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{% static 'core/css/bootstrap.css' %}">
     <!-- CSS general -->
     <link rel="stylesheet" href="{% static 'core/css/layout.css' %}">
-    <!-- Icono de prestaña del navegador -->
-    <link rel="icon" href="{% static 'core/images/logo-icon.png' %}" type="image/png">
+    <!-- Icono de pestaña del navegador -->
+    <link rel="icon" href="{% static 'core/images/LogoNegativo2.png' %}?v=2" type="image/png">
+    <style>
+        :root {
+            --primary-color: #6496e6;
+            --secondary-color: #3c64b4;
+            --accent-color: #7eb0ff;
+            --light-bg: #f8f9fa;
+            --dark-text: #2c3e50;
+            --light-text: #ecf0f1;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SideBar Rediseñada */
+        nav {
+            width: var(--sidebar-width);
+            background: linear-gradient(120deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
+            top: 0;
+        }
+
+        .logo-container {
+        background: linear-gradient(120deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        padding: 30px 20px;
+        border-radius: 0 0 12px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        /* 🔴 Quitamos margen */
+        margin: 0;
+    }
+
+        .logo-container img {
+            max-height: 150px;
+            width: auto;
+            max-width: 100%;
+        }
+        .page-title, .page-subtitle, h1, h2 {
+        margin-top: 0 !important;
+    }
+
+    /* Eliminamos margen del contenedor */
+    #contenedor {
+        flex: 1;
+        padding: 20px 30px; /* solo padding, sin margin-top */
+        background-color: var(--light-bg);
+    }
+
+    /* Ajustamos cards para que no tengan separación innecesaria */
+    .card {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        border: none;
+        margin: 0 0 20px 0; /* solo abajo */
+    }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin-bottom: 5px;
+        }
+
+        nav ul li a {
+            color: var(--light-text);
+            text-decoration: none;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+            font-size: 18px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+        }
+
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        nav ul li a.activo {
+            background: rgba(255, 255, 255, 0.15);
+            border-left: 4px solid var(--accent-color);
+            font-weight: 600;
+        }
+
+        nav ul li a i {
+            margin-right: 12px;
+            font-size: 22px;
+        }
+
+        .crear {
+            background: linear-gradient(120deg, #2ecc71, #27ae60);
+            color: white;
+            text-decoration: none;
+            padding: 18px 25px;
+            margin: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .crear:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            color: white;
+        }
+
+        .crear i {
+            margin-right: 10px;
+            font-size: 22px;
+        }
+
+        /* Contenido Principal */
+        #principal {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Superior - CORREGIDO */
+        #superior {
+            background: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            height: var(--header-height);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            gap: 20px;
+        }
+
+        /* Barra de búsqueda centrada */
+        #searchbar {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .custom-form {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .custom-form__input {
+            width: 100%;
+            padding: 14px 45px 14px 15px;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .custom-form__input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(100, 150, 230, 0.2);
+        }
+
+        .custom-form__button {
+            position: absolute;
+            right: 5px;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .custom-form__reset {
+            position: absolute;
+            right: 35px;
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custom-form__reset:hover {
+            color: #999;
+        }
+
+        .custom-form__reset svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Perfil de usuario a la derecha */
+        .btn-primary {
+            background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            white-space: nowrap;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        /* Contenedor de contenido */
+        #contenedor {
+            flex: 1;
+            padding: 30px;
+            background-color: var(--light-bg);
+        }
+
+        /* Footer Rediseñado */
+        footer {
+            background: linear-gradient(120deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 30px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        footer h1 {
+            font-size: 26px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        footer #subtitulo {
+            font-style: italic;
+            opacity: 0.9;
+            font-size: 18px;
+            font-weight: 400;
+        }
+
+        footer #segundo {
+            text-align: right;
+            max-width: 400px;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        /* Estilos específicos para el contenido de pólizas */
+        .page-title {
+            color: var(--dark-text);
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            margin-top: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .page-subtitle {
+            color: #5a6c7d;
+            font-size: 20px;
+            margin-bottom: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+        
+        .card {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: none;
+            margin-bottom: 25px;
+        }
+        
+        .card-header {
+            background: linear-gradient(120deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 18px 20px;
+            font-size: 20px;
+            font-weight: 600;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .card-body {
+            padding: 25px;
+        }
+        
+        .table {
+            font-size: 17px;
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .table thead th {
+            background-color: #e9ecef;
+            color: var(--dark-text);
+            font-weight: 600;
+            padding: 16px 12px;
+            border-bottom: 2px solid #dee2e6;
+            vertical-align: middle;
+        }
+        
+        .table tbody td {
+            padding: 14px 12px;
+            vertical-align: middle;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .table tbody tr:hover {
+            background-color: rgba(100, 150, 230, 0.05);
+        }
+        
+        .btn-sm {
+            padding: 8px 14px;
+            font-size: 15px;
+            border-radius: 6px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+        }
+        
+        .btn-info {
+            background: linear-gradient(120deg, #17a2b8, #138496);
+            border: none;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(120deg, #ffc107, #e0a800);
+            border: none;
+        }
+        
+        .btn-info:hover, .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Modal */
+        .modal-content {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .modal-header {
+            background: linear-gradient(120deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 20px;
+        }
+        
+        .modal-title {
+            font-size: 22px;
+            font-weight: 600;
+        }
+        
+        .modal-body {
+            padding: 25px;
+            font-size: 17px;
+            font-weight: 400;
+        }
+        
+        .modal-footer {
+            padding: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            #searchbar {
+                max-width: 400px;
+                min-width: 250px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            nav {
+                width: 80px;
+                align-items: center;
+                padding: 0;
+            }
+            
+            .logo-container {
+                padding: 20px 15px;
+                margin: 0 0 20px 0;
+            }
+            
+            .logo-container img {
+                max-height: 100px;
+            }
+            
+            nav ul li a {
+                padding: 15px;
+                justify-content: center;
+                border-left: none;
+                border-bottom: 4px solid transparent;
+                font-size: 0;
+            }
+            
+            nav ul li a:hover,
+            nav ul li a.activo {
+                border-left: none;
+                border-bottom: 4px solid var(--accent-color);
+            }
+            
+            nav ul li a span {
+                display: none;
+            }
+            
+            nav ul li a i {
+                margin-right: 0;
+                font-size: 24px;
+            }
+            
+            .crear {
+                padding: 15px;
+                margin: 10px;
+                font-size: 0;
+            }
+            
+            .crear span {
+                display: none;
+            }
+            
+            .crear i {
+                margin-right: 0;
+                font-size: 24px;
+            }
+            
+            #principal {
+                margin-left: 80px;
+            }
+            
+            #superior {
+                justify-content: flex-end;
+                gap: 15px;
+                padding: 15px;
+                left: 80px;
+                width: calc(100% - 80px);
+            }
+            
+            #searchbar {
+                max-width: 300px;
+                min-width: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #superior {
+                padding: 12px 20px;
+                gap: 15px;
+            }
+            
+            .btn-primary {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            
+            .btn-primary img {
+                width: 32px;
+                height: 32px;
+            }
+            
+            #contenedor {
+                padding: 20px;
+            }
+            
+            .card-header {
+                font-size: 18px;
+            }
+            
+            #searchbar {
+                max-width: 250px;
+                min-width: 180px;
+            }
+            
+            .custom-form__input {
+                font-size: 16px;
+                padding: 12px 40px 12px 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            #superior {
+                padding: 10px 15px !important;
+                gap: 12px !important;
+                height: auto !important;
+                min-height: 60px !important;
+                left: 80px !important;
+                width: calc(100vw - 80px) !important;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            #searchbar {
+                max-width: 140px !important;
+                min-width: 120px !important;
+                margin-right: 8px !important;
+                order: 1;
+                flex: 0 0 auto;
+            }
+            
+            .custom-form__input {
+                font-size: 14px;
+                padding: 10px 35px 10px 12px;
+            }
+            
+            .btn-primary {
+                padding: 6px 12px !important;
+                font-size: 12px !important;
+                min-width: auto !important;
+                order: 2;
+            }
+            
+            .btn-primary img {
+                width: 28px !important;
+                height: 28px !important;
+            }
+            
+            .btn-primary span {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: 24px;
+            }
+            
+            .page-subtitle {
+                font-size: 16px;
+            }
+            
+            .table thead {
+                display: none;
+            }
+            
+            .table, .table tbody, .table tr, .table td {
+                display: block;
+                width: 100%;
+            }
+            
+            .table tr {
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+            
+            .table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+                border-bottom: 1px solid #dee2e6;
+            }
+            
+            .table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 12px;
+                width: 45%;
+                padding-right: 15px;
+                text-align: left;
+                font-weight: bold;
+            }
+            
+            footer {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            footer #segundo {
+                text-align: center;
+            }
+        }
+        .user-name {
+    background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 14px;
+    display: inline-block;
+}
+/* Aseguradoras - Solución definitiva para el tamaño de las imágenes */
+.table td img {
+    height: 40px !important;
+    width: auto !important;
+}
+    </style>
 </head>
 
 <body>
     <!-- SideBar -->
     <nav>
-        <img src="{% static 'core/images/logo.jpg' %}" alt="logo">
+        <div class="logo-container">
+            <img src="{% static 'core/images/LogoNegativoSF_R.png' %}" alt="Nexo CRM">
+        </div>
         <ul>
             <li>
-                <a class="primero {% if request.path|slice:':9' == '/polizas/' %}activo{% endif %}" href="{% url 'polizas' %}">Pólizas</a>
+                <a class="primero {% if request.path == '/polizas/' or request.path|slice:':8' == '/polizas' %}activo{% endif %}" href="{% url 'polizas' %}">
+                    <i class="bi bi-file-earmark-text"></i>
+                    <span>Pólizas</span>
+                </a>
             </li>
             <li>
-                <a class="{% if request.path|slice:':10' == '/clientes/' %}activo{% endif %}" href="{% url 'clientes' %}">Clientes</a>
+                <a class="{% if request.path == '/clientes/' or request.path|slice:':9' == '/clientes' %}activo{% endif %}" href="{% url 'clientes' %}">
+                    <i class="bi bi-people"></i>
+                    <span>Clientes</span>
+                </a>
             </li>
             <li>
-                <a class="{% if request.path == '/agentes/' %}activo{% endif %}" href="{% url 'agentes' %}">Agentes</a>
+                <a class="{% if request.path == '/agentes/' or request.path|slice:':9' == '/agentes' %}activo{% endif %}" href="{% url 'agentes' %}">
+                    <i class="bi bi-person-badge"></i>
+                    <span>Agentes</span>
+                </a>
             </li>
             <li>
-                <a class="{% if request.path == '/aseguradoras/' %}activo{% endif %}" href="{% url 'aseguradoras' %}">Aseguradoras</a>
+                <a class="{% if request.path == '/aseguradoras/' or request.path|slice:':14' == '/aseguradoras' %}activo{% endif %}" href="{% url 'aseguradoras' %}">
+                    <i class="bi bi-building"></i>
+                    <span>Aseguradoras</span>
+                </a>
             </li>
             <li>
-                <a class="{% if request.path|slice:':10' == '/reportes/' %}activo{% endif %}" href="{% url 'reportes' %}">Reportes</a>
+                <a class="{% if request.path == '/reportes/' or request.path|slice:':9' == '/reportes' %}activo{% endif %}" href="{% url 'reportes' %}">
+                    <i class="bi bi-graph-up"></i>
+                    <span>Reportes</span>
+                </a>
             </li>
         </ul>
-        <a class="crear {% if request.path|slice:':7' == '/crear/' %}activo{% endif %}" href="{% url 'crear' %}"><i class="bi bi-file-earmark-plus-fill"></i> Crear póliza</a>
+        <a class="crear {% if request.path == '/crear/' or request.path|slice:':7' == '/crear' %}activo{% endif %}" href="{% url 'crear' %}">
+            <i class="bi bi-file-earmark-plus-fill"></i>
+            <span>Crear póliza</span>
+        </a>
     </nav>
-    <!-- NavBar -->
-    <div id="superior">
-        <!-- From Uiverse.io by satyamchaudharydev -->
-        
-        {% if request.path == '/polizas/' or request.path == '/clientes/' or request.path == '/agentes/' or request.path == '/aseguradoras/' or request.path == '/reportes/polizas/' or request.path == '/reportes/agentes_aseguradoras/' or request.path == '/reportes/aseguradoras_tipos/'%}
-            <div id="searchbar">
-                <form class="custom-form" method="get">
-                    <button class="custom-form__button">
-                        <svg width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"
-                            aria-labelledby="search">
-                            <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9"
-                                stroke="currentColor" stroke-width="1.333" stroke-linecap="round" stroke-linejoin="round">
-                            </path>
-                        </svg>
-                    </button>
-                    <input class="custom-form__input" placeholder="Buscar elemento" required type="text" name="q" value="{{ request.GET.q }}">
-                    <button class="custom-form__reset" type="reset">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                </form>
-            </div>    
-        {% endif %}
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <img src="{% static 'core/images/profile-default.png' %}" alt="Foto de perfil">
-            {{ request.user.get_full_name }}
-        </button>
-    </div>
+    
+    <!-- Contenido Principal -->
     <div id="principal">
+        <!-- NavBar - CORREGIDO -->
+        <div id="superior">
+            <!-- Barra de búsqueda centrada -->
+            {% if request.path == '/polizas/' or request.path == '/clientes/' or request.path == '/agentes/' or request.path == '/aseguradoras/' or request.path == '/reportes/' or request.path|slice:':8' == '/polizas' or request.path|slice:':9' == '/clientes' or request.path|slice:':9' == '/agentes' or request.path|slice:':14' == '/aseguradoras' or request.path|slice:':9' == '/reportes' %}
+                <div id="searchbar">
+                    <form class="custom-form" method="get">
+                        <button class="custom-form__button" type="submit">
+                            <svg width="20" height="19" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="search">
+                                <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9" 
+                                      stroke="currentColor" stroke-width="1.333" stroke-linecap="round" stroke-linejoin="round">
+                                </path>
+                            </svg>
+                        </button>
+                        <input class="custom-form__input" placeholder="Buscar elemento" type="text" name="q" value="{{ request.GET.q }}">
+                        <button class="custom-form__reset" type="reset">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" 
+                                 stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
+            
+            <!-- Perfil de usuario a la derecha -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <img src="{% static 'core/images/profile-default.png' %}" alt="Foto de perfil">
+    <span class="user-name">{{ request.user.get_full_name }}</span>
+</button>
+        </div>
+        
         <!-- Contenido -->
         <div id="contenedor">
-            {% block content %}{% endblock %}
+            {% block content %}
+            <h1 class="page-title">Pólizas</h1>
+            <h2 class="page-subtitle">Lista de Pólizas Registradas</h2>
+            
+            <div class="card shadow">
+                <div class="card-header">
+                    <h5 class="mb-0">Pólizas</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Número de Póliza</th>
+                                    <th>Aseguradora</th>
+                                    <th>Agente</th>
+                                    <th>Cliente</th>
+                                    <th>Tipo de Póliza</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-label="Número de Póliza">uBCD8811V1</td>
+                                    <td data-label="Aseguradora">BBVA</td>
+                                    <td data-label="Agente">Eduardo Mora Hernández</td>
+                                    <td data-label="Cliente">Angel Ivan Briones Samudio</td>
+                                    <td data-label="Tipo de Póliza">Seguro de moto</td>
+                                    <td data-label="Acciones">
+                                        <a href="#" class="btn btn-info btn-sm">Ver info</a>
+                                        <a href="#" class="btn btn-warning btn-sm">Editar</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Número de Póliza">xPSwXMMFvg</td>
+                                    <td data-label="Aseguradora">BBVA</td>
+                                    <td data-label="Agente">Eduardo Mora Hernández</td>
+                                    <td data-label="Cliente">Santiago De La O Garza</td>
+                                    <td data-label="Tipo de Póliza">Seguro de vida</td>
+                                    <td data-label="Acciones">
+                                        <a href="#" class="btn btn-info btn-sm">Ver info</a>
+                                        <a href="#" class="btn btn-warning btn-sm">Editar</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Número de Póliza">SJYMc2XAOz</td>
+                                    <td data-label="Aseguradora">GNP Seguros</td>
+                                    <td data-label="Agente">Eduardo Mora Hernández</td>
+                                    <td data-label="Cliente">Angel Ivan Briones Samudio</td>
+                                    <td data-label="Tipo de Póliza">Seguro de moto</td>
+                                    <td data-label="Acciones">
+                                        <a href="#" class="btn btn-info btn-sm">Ver info</a>
+                                        <a href="#" class="btn btn-warning btn-sm">Editar</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Número de Póliza">025ta4XRpa</td>
+                                    <td data-label="Aseguradora">GNP Seguros</td>
+                                    <td data-label="Agente">Eduardo Mora Hernández</td>
+                                    <td data-label="Cliente">Rodrigo De La O. Garza</td>
+                                    <td data-label="Tipo de Póliza">Seguro de moto</td>
+                                    <td data-label="Acciones">
+                                        <a href="#" class="btn btn-info btn-sm">Ver info</a>
+                                        <a href="#" class="btn btn-warning btn-sm">Editar</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Número de Póliza">Aaggb48HJG</td>
+                                    <td data-label="Aseguradora">Qualitas</td>
+                                    <td data-label="Agente">Uziel Flores Torres</td>
+                                    <td data-label="Cliente">Santiago De La O Garza</td>
+                                    <td data-label="Tipo de Póliza">Seguro de Hogar</td>
+                                    <td data-label="Acciones">
+                                        <a href="#" class="btn btn-info btn-sm">Ver info</a>
+                                        <a href="#" class="btn btn-warning btn-sm">Editar</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
         </div>
+        
         <!-- Footer -->
         <footer>
             <div>
-                <h1>Ruja CRM</h1>
+                <h1>Nexo CRM</h1>
                 <p id="subtitulo">Simplificando gestiones desde 2025</p>
             </div>
             <div id="segundo">
-                <p>Proyecto hecha con mucho esfuezo y dedicación, haciendo uso de todos los conocimientos que se han
-                    adquirido durante el semestre.</p>
+                <p>Proyecto realizado por el equipo 2, para la materia de Base de datos</p>
             </div>
         </footer>
     </div>
+    
     <!-- Modal cerrar sesión -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Cerrar sesión</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ¿Está seguro de que desea cerrar sesión?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <a type="button" class="btn btn-primary" href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
-                </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cerrar sesión</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de que desea cerrar sesión?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a type="button" class="btn btn-primary" href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
             </div>
         </div>
     </div>
-    <script src="{% static 'core/js/bootstrap.js' %}"></script>
-</body>
+</div>
 
-</html>
+<script src="{% static 'core/js/bootstrap.js' %}"></script>
