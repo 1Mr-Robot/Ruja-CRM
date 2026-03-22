@@ -14,6 +14,7 @@ pylint==3.3.6
 pylint-celery==0.3
 pylint-django==2.6.1
 pylint-plugin-utils==0.8.2
+python-dotenv==1.2.2
 sqlparse==0.5.3
 tomlkit==0.13.2
 tzdata==2025.2
