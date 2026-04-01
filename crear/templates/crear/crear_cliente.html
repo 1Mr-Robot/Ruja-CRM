@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="{% static 'crear/css/crear.css' %}">
 
 <h1>Crear nueva póliza</h1>
-<div class="card">
+<div class="card p-3">
     <div class="card-body">
         <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off" checked>
         <label class="btn" for="success-outlined">Cliente existente</label>
@@ -54,14 +54,14 @@
                     <tbody id="contenido">
                         {% for cliente in clientes %}
                             <tr>
-                                <th scope="row">{{cliente.id}}</th>
-                                <td>{{cliente.nombre}}</td>
-                                <td>{{cliente.appaterno}}</td>
-                                <td>{{cliente.apmaterno}}</td>
-                                <td>{{cliente.celular}}</td>
-                                <td>{{cliente.telefono}}</td>
-                                <td>{{cliente.correo}}</td>
-                                <td><a href="{% url 'crear_agente' cliente.id %}" type="button" class="btn">Seleccionar</a></td>
+                                <th scope="row" data-label="Id">{{cliente.id}}</th>
+                                <td data-label="Nombre">{{cliente.nombre}}</td>
+                                <td data-label="Apellido Paterno">{{cliente.appaterno}}</td>
+                                <td data-label="Apellido Materno">{{cliente.apmaterno}}</td>
+                                <td data-label="Celular">{{cliente.celular}}</td>
+                                <td data-label="Telefono">{{cliente.telefono}}</td>
+                                <td data-label="Correo">{{cliente.correo}}</td>
+                                <td><a href="{% url 'crear_agente' cliente.id %}" type="button" class="btn btn-seleccionar">Seleccionar</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>

@@ -30,7 +30,8 @@ body {
 }
 
 /* ================== Elementos base ================== */
-a, button {
+a,
+button {
     font-weight: bold;
     text-decoration: none;
     transition: background-color 0.5s ease;
@@ -52,6 +53,7 @@ h1 {
     display: grid;
     align-items: center;
     justify-content: right;
+    z-index: 100;
 }
 
 #searchbar {
@@ -151,7 +153,7 @@ h1 {
     border-radius: 50%;
 }
 
-#superior button {
+#superior button:not(.sidebar-toggle) {
     height: 50px;
     display: grid;
     grid-template-columns: auto 1fr;
@@ -170,6 +172,10 @@ h1 {
 #superior button:hover {
     background-color: var(--colorSecundario);
     color: var(--colorPrincipal);
+}
+
+.sidebar-toggle {
+    display: none;
 }
 
 /* ================== Barra lateral (sidebar) ================== */
@@ -203,8 +209,10 @@ nav li {
 nav a {
     border-bottom: 5px solid var(--colorPrincipal);
     height: 50px;
-    display: grid;
+    display: flex;
     place-items: center;
+    padding: 0 10px;
+    gap: 10px;
     color: var(--colorPrincipal);
     font-size: 30px;
 }
@@ -281,6 +289,11 @@ td img {
 .btn:hover {
     color: var(--colorPrincipal);
     background-color: var(--colorSecundario);
+    border: 1px solid var(--colorPrincipal);
+}
+
+.btn-info,
+.btn-warning {
     border: 1px solid var(--colorPrincipal);
 }
 

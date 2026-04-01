@@ -14,25 +14,37 @@
             <th scope="col">Apellido Paterno</th>
             <th scope="col">Apellido Materno</th>
             <th scope="col">Celular</th>
-            <th scope="col">Telefono</th>
             <th scope="col">Correo</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
+            <th scope="col">Acciones</th>
         </tr>
     </thead>
     <tbody id="contenido">
         {% for cliente in clientes %}
-            <tr>
-                <th scope="row">{{cliente.id}}</th>
-                <td>{{cliente.nombre}}</td>
-                <td>{{cliente.appaterno}}</td>
-                <td>{{cliente.apmaterno}}</td>
-                <td>{{cliente.celular}}</td>
-                <td>{{cliente.telefono}}</td>
-                <td>{{cliente.correo}}</td>
-                <td><a href="{% url 'cliente_ver' cliente.id %}" type="button" class="btn"><i class="bi bi-info-circle"></i> Info</a></td>
-                <td><a href="{% url 'cliente_editar' cliente.id %}" type="button" class="btn"><i class="bi bi-pencil"></i> Editar</a></td>
-            </tr>   
+        <tr>
+            <td data-label="ID"><strong>{{ cliente.id }}</strong></td>
+            <td data-label="Nombre">{{ cliente.nombre }}</td>
+            <td data-label="Apellido Paterno">{{ cliente.appaterno }}</td>
+            <td data-label="Apellido Materno">{{ cliente.apmaterno }}</td>
+            <td data-label="Celular">{{ cliente.celular }}</td>
+            <td data-label="Correo">{{ cliente.correo }}</td>
+            <td>
+                <div class="btn-group">
+                    <a href="{% url 'cliente_ver' cliente.id %}" class="btn btn-info btn-sm">
+                        <i class="bi bi-info-circle"></i> <span>Info</span>
+                    </a>
+                    <a href="{% url 'cliente_editar' cliente.id %}" class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil"></i> <span>Editar</span>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7" class="text-center text-muted py-4">
+                <i class="bi bi-inbox"></i>
+                <p class="mt-2">No hay clientes registrados</p>
+            </td>
+        </tr>
         {% endfor %}
     </tbody>
 </table>

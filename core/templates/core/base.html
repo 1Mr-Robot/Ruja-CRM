@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{% static 'core/css/bootstrap.css' %}">
     <!-- CSS general -->
     <link rel="stylesheet" href="{% static 'core/css/layout.css' %}">
+    <!-- CSS responsive -->
+    <link rel="stylesheet" href="{% static 'core/css/responsive.css' %}">
     <!-- Icono de prestaña del navegador -->
     <link rel="icon" href="{% static 'core/images/logo-icon.png' %}" type="image/png">
 </head>
@@ -22,25 +24,46 @@
         <img src="{% static 'core/images/logo.jpg' %}" alt="logo">
         <ul>
             <li>
-                <a class="primero {% if request.path|slice:':9' == '/polizas/' %}activo{% endif %}" href="{% url 'polizas' %}">Pólizas</a>
+                <a class="primero {% if request.path|slice:':9' == '/polizas/' %}activo{% endif %}" href="{% url 'polizas' %}">
+                    <i class="bi bi-file-earmark-text"></i>
+                    <span>Pólizas</span>
+                </a>
             </li>
             <li>
-                <a class="{% if request.path|slice:':10' == '/clientes/' %}activo{% endif %}" href="{% url 'clientes' %}">Clientes</a>
+                <a class="{% if request.path|slice:':10' == '/clientes/' %}activo{% endif %}" href="{% url 'clientes' %}">
+                    <i class="bi bi-people"></i>
+                    <span>Clientes</span>
+                </a>
             </li>
             <li>
-                <a class="{% if request.path == '/agentes/' %}activo{% endif %}" href="{% url 'agentes' %}">Agentes</a>
+                <a class="{% if request.path == '/agentes/' %}activo{% endif %}" href="{% url 'agentes' %}">
+                    <i class="bi bi-person-badge"></i>
+                    <span>Agentes</span>
+                </a>
             </li>
             <li>
-                <a class="{% if request.path == '/aseguradoras/' %}activo{% endif %}" href="{% url 'aseguradoras' %}">Aseguradoras</a>
+                <a class="{% if request.path == '/aseguradoras/' %}activo{% endif %}" href="{% url 'aseguradoras' %}">
+                    <i class="bi bi-building"></i>
+                    <span>Aseguradoras</span>
+                </a>
             </li>
             <li>
-                <a class="{% if request.path|slice:':10' == '/reportes/' %}activo{% endif %}" href="{% url 'reportes' %}">Reportes</a>
+                <a class="{% if request.path|slice:':10' == '/reportes/' %}activo{% endif %}" href="{% url 'reportes' %}">
+                    <i class="bi bi-graph-up"></i>
+                    <span>Reportes</span>
+                </a>
             </li>
         </ul>
-        <a class="crear {% if request.path|slice:':7' == '/crear/' %}activo{% endif %}" href="{% url 'crear' %}"><i class="bi bi-file-earmark-plus-fill"></i> Crear póliza</a>
+        <a class="crear {% if request.path|slice:':7' == '/crear/' %}activo{% endif %}" href="{% url 'crear' %}">
+            <i class="bi bi-file-earmark-plus-fill"></i>
+            <span>Crear póliza</span>
+        </a>
     </nav>
     <!-- NavBar -->
     <div id="superior">
+        <button type="button" id="sidebar-toggle" class="sidebar-toggle">
+            <i class="bi bi-list"></i>
+        </button>
         <!-- From Uiverse.io by satyamchaudharydev -->
         
         {% if request.path == '/polizas/' or request.path == '/clientes/' or request.path == '/agentes/' or request.path == '/aseguradoras/' or request.path == '/reportes/polizas/' or request.path == '/reportes/agentes_aseguradoras/' or request.path == '/reportes/aseguradoras_tipos/'%}
@@ -105,6 +128,18 @@
         </div>
     </div>
     <script src="{% static 'core/js/bootstrap.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('sidebar-toggle');
+            const sidebar = document.querySelector('nav');
+            
+            if (toggleBtn && sidebar) {
+                toggleBtn.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

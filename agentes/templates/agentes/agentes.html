@@ -17,12 +17,19 @@
     </thead>
     <tbody id="contenido"> 
         {% for agente in agentes %}
-            <tr>
-                <th scope="row">{{agente.id}}</th>
-                <td>{{agente.nombre}}</td>
-                <td>{{agente.apellidopaterno}}</td>
-                <td>{{agente.apellidomaterno}}</td>
-            </tr>   
+        <tr>
+            <td data-label="ID"><strong>{{ agente.id }}</strong></td>
+            <td data-label="Nombre">{{ agente.nombre }}</td>
+            <td data-label="Apellido Paterno">{{ agente.apellidopaterno }}</td>
+            <td data-label="Apellido Materno">{{ agente.apellidomaterno }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" class="text-center text-muted py-4">
+                <i class="bi bi-inbox"></i>
+                <p class="mt-2">No hay agentes registrados</p>
+            </td>
+        </tr>
         {% endfor %}
     </tbody>
 </table>

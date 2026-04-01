@@ -9,7 +9,7 @@
 
 <h1>Crear nueva póliza</h1>
 <div class="card">
-    <div class="card-body">
+    <div class="card-body p-3">
         <h2 class="card-title">Cliente</h2>
         <div id="contenedorDatos" class="mt-3">
             <div>
@@ -42,7 +42,7 @@
         </div>
     </div>
 </div>
-<div class="card mt-3">
+<div class="card mt-3 p-3">
     <div class="card-body">
         <h2 class="card-title">Agente</h2>
         <div class="mt-3">
@@ -77,11 +77,11 @@
             <tbody id="contenido">
                 {% for agente in agentes %}
                     <tr>
-                        <th scope="row">{{agente.id}}</th>
-                        <td>{{agente.nombre}}</td>
-                        <td>{{agente.apellidopaterno}}</td>
-                        <td>{{agente.apellidomaterno}}</td>
-                        <td><a href="{% url 'crear_aseguradora' cliente.id agente.id %}" type="button" class="btn">Seleccionar</a></td>
+                        <th scope="row" data-label="Id">{{agente.id}}</th>
+                        <td data-label="Nombre">{{agente.nombre}}</td>
+                        <td data-label="Apellido Paterno">{{agente.apellidopaterno}}</td>
+                        <td data-label="Apellido Materno">{{agente.apellidomaterno}}</td>
+                        <td><a href="{% url 'crear_aseguradora' cliente.id agente.id %}" type="button" class="btn btn-seleccionar">Seleccionar</a></td>
                     </tr>    
                 {% endfor %}
             </tbody>

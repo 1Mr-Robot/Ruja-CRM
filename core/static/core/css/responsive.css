@@ -1,0 +1,359 @@
+@media (max-width: 1245px) {
+    #contenedor {
+        overflow-x: auto;
+    }
+
+    @media (max-width: 1050px) {
+        #searchbar {
+            left: 10px;
+            transform: none;
+        }
+
+        footer {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        footer h1 {
+            font-size: 70px;
+        }
+
+        @media (max-width: 880px) {
+            nav {
+                width: 60px;
+            }
+
+            nav a {
+                justify-content: center;
+            }
+
+            nav a span {
+                display: none;
+            }
+
+            .crear {
+                margin: 5px;
+                padding: 5px;
+                height: fit-content;
+            }
+
+            #principal {
+                margin-left: 60px;
+            }
+
+            @media (max-width: 780px) {
+                #superior {
+                    display: grid;
+                    justify-content: left;
+                    grid-template-columns: auto 1fr auto;
+                    gap: 10px;
+                    padding: 0 10px;
+                }
+
+                #searchbar {
+                    position: unset;
+                    flex: 1;
+                    width: auto;
+                }
+
+                #searchbar form {
+                    width: 100%;
+                }
+
+                #superior button {
+                    width: auto;
+                }
+
+                @media (max-width: 735px) {
+                    #contenedorDatos {
+                        display: block;
+                    }
+
+                    #contenedor .reportes {
+                        width: 100%;
+                    }
+
+                    /* Sidebar Toggle Button */
+                    .sidebar-toggle {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 44px;
+                        height: 44px;
+                        background: var(--primary-color);
+                        border: none;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        color: white;
+                        font-size: 24px;
+                    }
+
+                    .sidebar-toggle:hover {
+                        background: var(--accent-color);
+                    }
+
+                    /* Hide sidebar completely */
+                    nav {
+                        transform: translateX(-100%);
+                        width: 280px;
+                        z-index: 1000;
+                    }
+
+                    nav.active {
+                        transform: translateX(0);
+                    }
+
+                    nav ul li a {
+                        padding: 15px 25px;
+                        font-size: 16px;
+                        justify-content: flex-start;
+                        border-left: 4px solid transparent;
+                        border-bottom: none;
+                    }
+
+                    nav ul li a span {
+                        display: inline;
+                        margin-left: 12px;
+                    }
+
+                    nav ul li a i {
+                        font-size: 22px;
+                        margin-right: 0;
+                    }
+
+                    nav ul li a:hover,
+                    nav ul li a.activo {
+                        border-left: 4px solid var(--accent-color);
+                        border-bottom: none;
+                    }
+
+                    .crear {
+                        padding: 15px 25px;
+                        margin: 15px;
+                        font-size: 16px;
+                    }
+
+                    .crear span {
+                        display: inline;
+                        margin-left: 12px;
+                    }
+
+                    .crear i {
+                        font-size: 22px;
+                        margin-right: 0;
+                    }
+
+                    .logo-container {
+                        padding: 25px 20px;
+                        margin: 80px 0 20px 0;
+                    }
+
+                    .logo-container img {
+                        max-height: 120px;
+                    }
+
+                    /* Layout Adjustments */
+                    #principal {
+                        margin-left: 0;
+                    }
+
+                    .btn-primary img {
+                        width: 28px !important;
+                        height: 28px !important;
+                        margin: auto 0;
+                    }
+
+                    /* Content Container */
+                    #contenedor {
+                        padding: 15px;
+                    }
+
+                    /* Page Titles */
+                    h1 {
+                        font-size: 24px !important;
+                    }
+
+                    .page-title {
+                        font-size: 24px;
+                    }
+
+                    .page-subtitle {
+                        font-size: 16px;
+                    }
+
+                    /* Cards */
+                    .card {
+                        margin-bottom: 15px;
+                    }
+
+                    .card-header {
+                        padding: 15px;
+                        font-size: 18px;
+                    }
+
+                    .card-body {
+                        padding: 0;
+                    }
+
+                    /* Responsive Tables - Card Style */
+                    .table {
+                        font-size: 14px;
+                    }
+
+                    .table thead {
+                        display: none;
+                    }
+
+                    .table,
+                    .table tbody,
+                    .table tr,
+                    .table td {
+                        display: block;
+                        width: 100%;
+                    }
+
+                    .table tr {
+                        margin-bottom: 15px;
+                        border: 1px solid #ddd;
+                        border-radius: 8px;
+                        overflow: hidden;
+                        background: white;
+                    }
+
+                    .table td {
+                        text-align: right;
+                        padding: 12px 15px 12px 50%;
+                        position: relative;
+                        border-bottom: 1px solid #eee;
+                    }
+
+                    .table td:last-child {
+                        border-bottom: none;
+                    }
+
+                    .table td::before {
+                        content: attr(data-label);
+                        position: absolute;
+                        left: 15px;
+                        width: 45%;
+                        text-align: left;
+                        font-weight: 600;
+                        color: var(--dark-text);
+                    }
+
+                    /* Table Actions */
+                    .table td:last-child {
+                        text-align: center;
+                        padding-left: 15px;
+                    }
+
+                    .table td:last-child::before {
+                        display: none;
+                    }
+
+                    .btn-group {
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+                        gap: 8px;
+                    }
+
+                    .btn-group .btn {
+                        width: 100%;
+                        justify-content: center;
+                        border-radius: 6px;
+                    }
+
+                    /* Form Containers */
+                    .form-container {
+                        width: 100%;
+                        padding: 10px;
+                    }
+
+                    .container-form {
+                        width: 100%;
+                    }
+
+                    form:not(.custom-form) {
+                        max-width: 100%;
+                    }
+
+                    form:not(.custom-form) p {
+                        margin-bottom: 15px;
+                    }
+
+                    form:not(.custom-form) label {
+                        font-size: 14px;
+                    }
+
+                    form:not(.custom-form) input[type="text"],
+                    form:not(.custom-form) input[type="date"],
+                    form:not(.custom-form) input[type="number"],
+                    form:not(.custom-form) select {
+                        padding: 10px 12px;
+                        font-size: 16px;
+                    }
+
+                    .form-buttons {
+                        flex-direction: column;
+                    }
+
+                    .form-buttons .btn-cancelar,
+                    .form-buttons .btn-actualizar {
+                        width: 100%;
+                        text-align: center;
+                    }
+
+                    form:not(.custom-form) .btn-crear {
+                        padding: 12px;
+                        font-size: 16px;
+                    }
+
+                    /* Buttons */
+                    .btn-primary,
+                    .btn-secondary {
+                        padding: 8px 16px;
+                        font-size: 14px;
+                        border-radius: 20px;
+                        height: 44px;
+                    }
+
+                    .btn-sm {
+                        padding: 6px 12px;
+                        font-size: 13px;
+                    }
+
+                    /* Toggle Button (Ocultar vencidas) */
+                    #toggleVencidas {
+                        position: relative !important;
+                        top: auto !important;
+                        right: auto !important;
+                        transform: none !important;
+                        width: 100%;
+                        margin-bottom: 15px;
+                    }
+
+                    /* Footer */
+                    footer {
+                        flex-direction: column;
+                        text-align: center;
+                        gap: 15px;
+                        padding: 20px 15px;
+                    }
+
+                    footer h1 {
+                        font-size: 22px !important;
+                    }
+
+                    footer #subtitulo {
+                        font-size: 14px;
+                    }
+
+                    footer #segundo {
+                        text-align: center;
+                        max-width: 100%;
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+}

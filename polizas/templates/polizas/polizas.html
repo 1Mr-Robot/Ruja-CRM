@@ -14,21 +14,37 @@
             <th scope="col">Agente</th>
             <th scope="col">Cliente</th>
             <th scope="col">Tipo de póliza</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
+            <th>Fecha de vencimiento</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody id="contenido">
         {% for poliza in polizas %}
-            <tr>
-                <th scope="row">{{poliza.id}}</th>
-                <td>{{poliza.aseguradoraid}}</td>
-                <td>{{poliza.agenteid}}</td>
-                <td>{{poliza.clienteid}}</td>
-                <td>{{poliza.tipopolizaid}}</td>
-                <td><a href="{% url 'poliza_ver' poliza.id %}" type="button" class="btn"><i class="bi bi-info-circle"></i> Info</a></td>
-                <td><a href="{% url 'poliza_editar' poliza.id %}" type="button" class="btn"><i class="bi bi-pencil"></i> Editar</a></td>
-            </tr>    
+        <tr>
+            <td data-label="Número de Póliza"><strong>{{ poliza.id }}</strong></td>
+            <td data-label="Aseguradora">{{ poliza.aseguradoraid }}</td>
+            <td data-label="Agente">{{ poliza.agenteid }}</td>
+            <td data-label="Cliente">{{ poliza.clienteid }}</td>
+            <td data-label="Tipo de Póliza">{{ poliza.tipopolizaid }}</td>
+            <td data-label="Fecha de vencimiento">{{ poliza.fechafin }}</td>
+            <td>
+                <div class="btn-group">
+                    <a href="{% url 'poliza_ver' poliza.id %}" class="btn btn-info btn-sm">
+                        <i class="bi bi-info-circle"></i> <span>Info</span>
+                    </a>
+                    <a href="{% url 'poliza_editar' poliza.id %}" class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil"></i> <span>Editar</span>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6" class="text-center text-muted py-4">
+                <i class="bi bi-inbox"></i>
+                <p class="mt-2">No hay pólizas registradas</p>
+            </td>
+        </tr>
         {% endfor %}
     </tbody>
 </table>
