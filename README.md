@@ -2,6 +2,9 @@
 
 Sistema de gestión de pólizas de seguro diseñado para simplificar la administración de agentes, aseguradoras, tipos de póliza y clientes.
 
+> [!NOTE]
+> Esta es una versión demo modificada para que los usuarios puedan visitar la página sin tener que iniciar sesión. Esta es la versión que se muestra en ruja-crm.uziel.app
+
 ## Descripción
 
 Ruja CRM es un sistema integral para la gestión de pólizas de seguro, desarrollado como proyecto final del equipo 1 del grupo 004 de Taller de Programación Orientada a Objetos. El sistema permite administrar de manera eficiente todos los aspectos relacionados con las pólizas de seguro.
