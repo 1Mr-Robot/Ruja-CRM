@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
 from decimal import Decimal
 from clientes.models import Cliente
 from clientes.forms import ClienteForm
@@ -8,7 +7,6 @@ from aseguradoras.models import Aseguradora
 from polizas.models import Tipopoliza, Formapago, Metodopago, Poliza
 from core.models import Detalleastp
 
-@login_required
 def crear(request):
     query = request.GET.get('q')
     if query:
@@ -35,7 +33,6 @@ def crear(request):
         'form': form
     })
 
-@login_required
 def crear_agente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     query = request.GET.get('q')
@@ -56,7 +53,6 @@ def crear_agente(request, cliente_id):
         'cliente':cliente
     })
 
-@login_required
 def crear_aseguradora(request, cliente_id, agente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     agente = get_object_or_404(Agente, pk=agente_id)
@@ -70,7 +66,6 @@ def crear_aseguradora(request, cliente_id, agente_id):
         'cliente': cliente
     })
 
-@login_required
 def crear_tipoPoliza(request, cliente_id, agente_id, aseguradora_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     agente = get_object_or_404(Agente, pk=agente_id)
@@ -86,7 +81,6 @@ def crear_tipoPoliza(request, cliente_id, agente_id, aseguradora_id):
         'cliente': cliente
     })
 
-@login_required
 def crear_pago(request, cliente_id, agente_id, aseguradora_id, tipoPoliza_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     agente = get_object_or_404(Agente, pk=agente_id)

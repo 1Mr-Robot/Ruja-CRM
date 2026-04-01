@@ -2,9 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from .models import Poliza
 from .forms import PolizaForm
-from django.contrib.auth.decorators import login_required
 
-@login_required
 def polizas(request):
     query = request.GET.get('q')
     if query:
@@ -27,7 +25,6 @@ def polizas(request):
         polizas = Poliza.objects.all().order_by('aseguradoraid__nombre', 'agenteid__nombre', 'agenteid__apellidopaterno', 'agenteid__apellidomaterno', 'clienteid__nombre', 'clienteid__appaterno', 'clienteid__apmaterno')
     return render(request, "polizas/polizas.html", {'polizas':polizas})
 
-@login_required
 def poliza_detalle(request, Poliza_id, modo=None):
     poliza = get_object_or_404(Poliza, id=Poliza_id)
 

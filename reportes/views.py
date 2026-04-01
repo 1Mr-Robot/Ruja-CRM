@@ -2,13 +2,10 @@ from django.shortcuts import render
 from django.db.models import Q
 from polizas.models import Poliza
 from core.models import Detalleagas, Detalleastp
-from django.contrib.auth.decorators import login_required
 
-@login_required
 def menu(request):
     return render(request, "reportes/menu.html")
 
-@login_required
 def reporte_polizas(request):
     query = request.GET.get('q')
     if query:
@@ -31,7 +28,6 @@ def reporte_polizas(request):
         polizas = Poliza.objects.all().order_by('fechafin')
     return render(request, "reportes/polizas.html", {'polizas':polizas})
 
-@login_required
 def reporte_AgAs(request):
     query = request.GET.get('q')
     if query:
@@ -49,7 +45,6 @@ def reporte_AgAs(request):
         detalles = Detalleagas.objects.all().order_by('agenteid__nombre', 'agenteid__apellidopaterno', 'agenteid__apellidomaterno')
     return render(request, "reportes/AgAs.html", {'detalles':detalles})
 
-@login_required
 def reporte_AsTP(request):
     query = request.GET.get('q')
     if query:

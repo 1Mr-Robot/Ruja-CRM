@@ -87,10 +87,17 @@
                 </form>
             </div>    
         {% endif %}
+        {% if user.is_authenticated %}
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <img src="{% static 'core/images/profile-default.png' %}" alt="Foto de perfil">
             {{ request.user.get_full_name }}
         </button>
+        {% else %}
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+            <img src="{% static 'core/images/profile-default.png' %}" alt="Foto de perfil">
+            Invitado
+        </button>
+        {% endif %}
     </div>
     <div id="principal">
         <!-- Contenido -->
@@ -110,6 +117,7 @@
         </footer>
     </div>
     <!-- Modal cerrar sesión -->
+    {% if user.is_authenticated %}
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -127,6 +135,25 @@
             </div>
         </div>
     </div>
+    {% else %}
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Iniciar sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Desea iniciar sesión?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a type="button" class="btn btn-primary" href="{% url 'login' %}">Iniciar sesión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
     <script src="{% static 'core/js/bootstrap.js' %}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

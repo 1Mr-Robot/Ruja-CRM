@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from .models import Aseguradora
-from django.contrib.auth.decorators import login_required
 
-@login_required
 def aseguradoras(request):
     query = request.GET.get('q')
     if query:

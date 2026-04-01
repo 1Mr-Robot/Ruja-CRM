@@ -1,9 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
 from .models import Cliente
 from .forms import ClienteForm
 
-@login_required
 def clientes(request):
     query = request.GET.get('q')
     if query:
@@ -20,7 +18,6 @@ def clientes(request):
         clientes = Cliente.objects.all().order_by('nombre', 'appaterno', 'apmaterno')
     return render(request, "clientes/clientes.html", {'clientes':clientes})
         
-@login_required
 def cliente_detalle(request, Cliente_id, modo=None):
     cliente = get_object_or_404(Cliente, id=Cliente_id)
 
