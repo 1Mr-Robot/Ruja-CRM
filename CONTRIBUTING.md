@@ -19,8 +19,7 @@ Ruja-CRM/
 ├── core/                  # Aplicación principal
 ├── db.sql                 # Script de inicialización de base de datos
 ├── docker-compose.yml     # Configuración de servicios
-├── nginx/
-│   └── default.conf       # Configuración de Nginx
+├── nginx.conf             # Configuración de Nginx
 ├── requirements.txt       # Dependencias Python
 ├── .env                   # Variables de entorno
 └── .env.example           # Plantilla de variables de entorno
@@ -73,6 +72,9 @@ Variables principales:
 | `DEBUG` | Modo debug | `True` |
 | `SECRET_KEY` | Clave secreta de Django | `your-secret-key-here` |
 | `ALLOWED_HOSTS` | Hosts permitidos | `localhost,127.0.0.1` |
+| `CSRF_TRUSTED_ORIGINS` | Dominios confiables | `http://localhost:8000` |
+| `HTTPS` | Configuración HTTPS | `True` |
+| `TIME_ZONE` | Zona horaria | `America/Monterrey` |
 | `DB_NAME` | Nombre de la base de datos | `ruja` |
 | `DB_USER` | Usuario de la base de datos | `user` |
 | `DB_PASSWORD` | Contraseña de la base de datos | `super_secure_password` |
@@ -117,6 +119,7 @@ SECRET_KEY=your-secret-key-here
 ALLOWED_HOSTS=localhost,127.0.0.1
 CSRF_TRUSTED_ORIGINS=http://localhost:8001
 HTTPS=False
+TIME_ZONE=America/Monterrey
 
 # Superuser
 SUPERUSER_USERNAME=admin
@@ -127,14 +130,12 @@ SUPERUSER_PASSWORD=admin123
 DB_NAME=ruja
 DB_USER=user
 DB_PASSWORD=super_secure_password
+DB_ROOT_PASSWORD=very_strong_root_password
 DB_HOST=db
 DB_PORT=3306
 
-# MySQL
-MYSQL_DATABASE=ruja
-MYSQL_USER=user
-MYSQL_PASSWORD=super_secure_password
-MYSQL_ROOT_PASSWORD=very_strong_root_password
+# Puerto de entrada
+PORT=8000
 ```
 
 **Nota:** Si se modifican los valores de la base de datos en el `.env`, es necesario eliminar los contenedores y volúmenes existentes para que se apliquen los cambios.
@@ -149,7 +150,7 @@ docker-compose up --build
 
 | Servicio | Puerto | Descripción |
 |----------|--------|-------------|
-| Nginx | 8006 | Servidor web (entrada principal) |
+| Nginx | Variable `PORT` | Servidor web (entrada principal) |
 | Django | 8000 | Aplicación backend |
 | MySQL | 3309 | Base de datos |
 
@@ -228,7 +229,8 @@ DEBUG=False
 SECRET_KEY=<clave-segura-generada>
 ALLOWED_HOSTS=<dominio-produccion>
 CSRF_TRUSTED_ORIGINS=https://<dominio-produccion>
-HTTPS=True
+HTTPS=False
+TIME_ZONE=America/Monterrey
 
 DB_NAME=ruja
 DB_USER=user
@@ -239,8 +241,7 @@ DB_PORT=3306
 
 ### Puertos expuesto
 
-- **8006**: Puerto de entrada via Nginx
-- **3309**: MySQL
+- **Variable `PORT`**: Puerto de entrada via Nginx
 
 ### Archivos estáticos y media
 
