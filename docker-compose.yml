@@ -35,7 +35,7 @@ services:
       - ruja-crm
 
   nginx:
-    image: nginx:alpine
+    image: nginx:latest
     container_name: ruja-crm-nginx
     restart: always
     ports:
